@@ -39,3 +39,6 @@ mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+feign:
+  hystrix:
+    enabled: true
