@@ -25,7 +25,7 @@ public class UserAuthServiceImpl implements UserAuthService {
     @Override
     public Result<?> authUser(User user) {
         user.setUserPass(passSaltAddition.passSaltAddition(user.getUserPass()));
-        if (userMapper.authUser(user) > 0) {
+        if (userMapper.authUser(user)!= null) {
             return Result.success(null);
         }
         return Result.error(null);
