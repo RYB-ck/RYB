@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 public class SystemLogAspect {
     private static final Logger logger = LoggerFactory.getLogger(SystemLogAspect.class);
 
-    @Pointcut("within(com.ryb.*)")
+    @Pointcut("execution(* com.ryb.*.controller.*(..))")
     public void controllerAspect() {
     }
 

@@ -1,5 +1,6 @@
 package com.ryb.oauth.controller;
 
+import com.ryb.core.log.Log;
 import com.ryb.core.po.User;
 import com.ryb.core.result.APIResult;
 import com.ryb.core.result.ResultSupport;
@@ -24,11 +25,13 @@ public class OauthController {
     }
 
     @PostMapping(value = "authUser", produces = {"application/json;charset=UTF-8"})
+    @Log(operationType = "sel", operationName = "校验用户")
     public APIResult<?> authUser(@RequestBody User user) {
         return userAuthService.authUser(user);
     }
 
     @PostMapping(value = "register", produces = {"application/json;charset=UTF-8"})
+    @Log(operationType = "add", operationName = "新增用户")
     public APIResult<?> register(@RequestBody User user) {
         return userAuthService.register(user);
     }

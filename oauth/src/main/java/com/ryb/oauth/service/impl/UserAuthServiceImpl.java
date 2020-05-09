@@ -36,7 +36,6 @@ public class UserAuthServiceImpl implements UserAuthService {
     }
 
     @Override
-    @Log(operationType = "add", operationName = "新增用户")
     @Transactional(rollbackFor = Exception.class)
     public APIResult<?> register(User user) {
         try {
