@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ryb.oauth.mapper.UserMapper">
+    <select id="authUser" resultType="com.ryb.core.po.User">
+        SELECT COUNT(1)
+        FROM user
+        WHERE (user_mobile = #{userMobile} OR user_mail = #{userMail})
+          AND user_pass = #{userPass}
+          AND status = 1
+    </select>
+
+    <insert id="register">
+        INSERT INTO user (id, user_name, user_nickname, user_head_portrait, user_sex, user_autograph, user_openid,
+                          user_mobile, user_mail, user_pass, last_login_time, create_time, create_user, update_time,
+                          update_user)
+        VALUES ( #{id}, #{userName}, #{userNickName}, #{userHeadPortrait}, #{userSex}, #{userAutograph}, #{userOpenid}
+               , #{userMobile}, #{userMail}, #{userPass}, NOW(), NOW(), #{id}, NOW(), #{id})
+    </insert>
 </mapper>

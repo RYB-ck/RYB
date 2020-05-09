@@ -16,5 +16,7 @@ public interface UserMapper {
      * @param user
      * @return
      */
-    User authUser(User user);
+    Integer authUser(User user);
+
+    Integer register(User user);
 }
