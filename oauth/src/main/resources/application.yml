@@ -2,9 +2,9 @@ spring:
   application:
     name: oauth # 服务名称
   datasource:
-    url: jdbc:mysql://localhost:3306/ryb?useUnicode=true&characterEncoding=utf8
-    username: root
-    password: root
+    url: jdbc:mysql://rm-m5eiukw73958gf5x4jo.mysql.rds.aliyuncs.com:3306/ryb?useUnicode=true&characterEncoding=utf8
+    username: ryb_01_admin
+    password: admin!@#123
     driver-class-name: org.gjt.mm.mysql.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     dbcp2:
