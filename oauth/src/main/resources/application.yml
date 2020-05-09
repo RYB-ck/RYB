@@ -12,6 +12,18 @@ spring:
       initial-size: 5     #初始化提供的连接数
       max-total: 5          #最大的连接数
       max-wait-millis: 200        #等待连接获取的最大超时时间
+    filters: stat
+    initialSize: 2
+    maxActive: 300
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: false
+    maxPoolPreparedStatementPerConnectionSize: 200
 
 # 服务注册中心
 eureka:
@@ -25,3 +37,5 @@ server:
 mybatis:
   type-aliases-package: com.gyf.domain
   mapper-locations: classpath:mapper/*Mapper.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

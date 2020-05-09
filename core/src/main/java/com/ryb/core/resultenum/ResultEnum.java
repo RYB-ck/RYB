@@ -5,9 +5,9 @@ package com.ryb.core.resultenum;
  */
 
 public enum ResultEnum {
-    SUCCESS("0000", "成功"),
-    ERROR("9999", "失败"),
-    WAIT("1111", "正在处理结果");
+    SUCCESS("200", "成功"),
+    ERROR("500", "失败"),
+    WAIT("202", "正在处理结果");
 
     private String code;
 

@@ -1,7 +1,8 @@
 package com.ryb.oauth.service.impl;
 
 import com.ryb.core.po.User;
-import com.ryb.core.result.Result;
+import com.ryb.core.result.APIResult;
+import com.ryb.core.resultenum.ResultEnum;
 import com.ryb.oauth.mapper.UserMapper;
 import com.ryb.oauth.service.UserAuthService;
 import com.ryb.oauth.util.PassSaltAddition;
@@ -23,20 +24,21 @@ public class UserAuthServiceImpl implements UserAuthService {
     }
 
     @Override
-    public Result<?> authUser(User user) {
+    public APIResult<?> authUser(User user) {
         user.setUserPass(passSaltAddition.passSaltAddition(user.getUserPass()));
-        if (userMapper.authUser(user)!= null) {
-            return Result.success(null);
+        if (userMapper.authUser(user) != null) {
+            return APIResult.newSuccessResult();
         }
-        return Result.error(null);
+        return APIResult.newFailResult(ResultEnum.ERROR);
     }
 
     @Override
-    public Result<?> register(User user){
+    public APIResult<?> register(User user) {
         user.setUserPass(passSaltAddition.passSaltAddition(user.getUserPass()));
-        if (userMapper.register(user) > 0) {
-            return Result.success(null);
+        if (userMapper.register(user) != null) {
+            return APIResult.newSuccessResult();
         }
-        return Result.error(null);
+        return APIResult.newFailResult(ResultEnum.ERROR);
+
     }
 }
