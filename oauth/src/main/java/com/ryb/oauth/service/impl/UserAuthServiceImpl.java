@@ -3,6 +3,7 @@ package com.ryb.oauth.service.impl;
 import com.ryb.core.po.User;
 import com.ryb.core.result.APIResult;
 import com.ryb.core.resultenum.ResultEnum;
+import com.ryb.core.util.InitializationToken;
 import com.ryb.oauth.mapper.UserMapper;
 import com.ryb.oauth.service.UserAuthService;
 import com.ryb.oauth.util.PassSaltAddition;
@@ -19,19 +20,21 @@ public class UserAuthServiceImpl implements UserAuthService {
     final UserMapper userMapper;
     final PassSaltAddition passSaltAddition;
     final RedisUtils redisUtils;
+    final InitializationToken initializationToken;
 
     @Autowired
-    public UserAuthServiceImpl(UserMapper userMapper, PassSaltAddition passSaltAddition, RedisUtils redisUtils) {
+    public UserAuthServiceImpl(UserMapper userMapper, PassSaltAddition passSaltAddition, RedisUtils redisUtils, InitializationToken initializationToken) {
         this.userMapper = userMapper;
         this.passSaltAddition = passSaltAddition;
         this.redisUtils = redisUtils;
+        this.initializationToken = initializationToken;
     }
 
     @Override
     public APIResult<?> authUser(User user) {
         user.setUserPass(passSaltAddition.passSaltAddition(user.getUserPass()));
         if (userMapper.authUser(user) != null) {
-            return APIResult.newSuccessResult("成功");
+            return APIResult.newSuccessResult(initializationToken.getToken(user.getId()));
         }
         return APIResult.newFailResult(ResultEnum.ERROR);
     }
