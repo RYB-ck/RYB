@@ -30,12 +30,10 @@ public class UserAuthServiceImpl implements UserAuthService {
     @Override
     public APIResult<?> authUser(User user) {
         user.setUserPass(passSaltAddition.passSaltAddition(user.getUserPass()));
-        System.err.println(user.getUserPass());
         if (userMapper.authUser(user) != null) {
             return APIResult.newSuccessResult("成功");
         }
-        redisUtils.set("123", "123");
-        return APIResult.newSuccessResult("成功");
+        return APIResult.newFailResult(ResultEnum.ERROR);
     }
 
     @Override
