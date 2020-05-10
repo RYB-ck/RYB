@@ -29,23 +29,20 @@ public class UserAuthServiceImpl implements UserAuthService {
     @Override
     public APIResult<?> authUser(User user) {
         user.setUserPass(passSaltAddition.passSaltAddition(user.getUserPass()));
+        System.err.println(user.getUserPass());
         if (userMapper.authUser(user) != null) {
-            return APIResult.newSuccessResult();
+            return APIResult.newSuccessResult("成功");
         }
-        return APIResult.newFailResult(ResultEnum.ERROR);
+        return APIResult.newSuccessResult("成功");
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public APIResult<?> register(User user) {
-        try {
-            user.setUserPass(passSaltAddition.passSaltAddition(user.getUserPass()));
-            if (userMapper.register(user) != null) {
-                return APIResult.newSuccessResult();
-            }
-            return APIResult.newFailResult(ResultEnum.ERROR);
-        } catch (Exception e) {
-            return ResultException.resultException(e);
+        user.setUserPass(passSaltAddition.passSaltAddition(user.getUserPass()));
+        if (userMapper.register(user) != null) {
+            return APIResult.newSuccessResult();
         }
+        return APIResult.newFailResult(ResultEnum.ERROR);
     }
 }

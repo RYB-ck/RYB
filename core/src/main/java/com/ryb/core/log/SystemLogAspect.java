@@ -1,6 +1,5 @@
 package com.ryb.core.log;
 
-import com.ryb.core.po.User;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -18,7 +17,7 @@ import java.lang.reflect.Method;
 public class SystemLogAspect {
     private static final Logger logger = LoggerFactory.getLogger(SystemLogAspect.class);
 
-    @Pointcut("execution(* com.ryb.*.controller.*(..))")
+    @Pointcut("execution(* com.ryb.*.controller..*.*(..))")
     public void controllerAspect() {
     }
 
@@ -30,19 +29,21 @@ public class SystemLogAspect {
     }
 
     @Around("controllerAspect()")
-    public void around(JoinPoint joinPoint) {
+    public Object around(JoinPoint joinPoint) {
         long start = System.currentTimeMillis();
         try {
-            ((ProceedingJoinPoint) joinPoint).proceed();
+            Object result = ((ProceedingJoinPoint) joinPoint).proceed();
             long end = System.currentTimeMillis();
             if (logger.isInfoEnabled()) {
                 logger.info("around " + joinPoint + "\tUse time : " + (end - start) + " ms!");
             }
+            return result;
         } catch (Throwable e) {
             long end = System.currentTimeMillis();
             if (logger.isInfoEnabled()) {
                 logger.info("around " + joinPoint + "\tUse time : " + (end - start) + " ms!");
             }
+            return e;
         }
     }
 

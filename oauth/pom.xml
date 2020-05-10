@@ -17,9 +17,40 @@
     <properties>
         <java.version>1.8</java.version>
         <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
+        <RYB-core.version>0.0.1-SNAPSHOT</RYB-core.version>
+        <mysql.version>5.1.46</mysql.version>
+        <druid.version>1.0.20</druid.version>
+        <fastjson.version>1.2.58</fastjson.version>
     </properties>
 
     <dependencies>
+        <!-- mybatis-plus -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatisplus-spring-boot-starter</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+
+        <!-- mysql连接驱动 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+
+        <!-- druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+
         <!-- 微服务框架 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -31,30 +62,17 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- mysql连接驱动 -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.46</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.RYB</groupId>
-            <artifactId>red-yellow-blue</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>1.1.1</version>
         </dependency>
 
-        <!-- mybatis-plus -->
+        <!-- openfeign -->
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatisplus-spring-boot-starter</artifactId>
-            <version>1.0.5</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>2.1.0.RELEASE</version>
         </dependency>
 
         <dependency>
@@ -73,14 +91,7 @@
         <dependency>
             <groupId>com.RYB</groupId>
             <artifactId>core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-        <!-- druid -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.1.20</version>
+            <version>${RYB-core.version}</version>
         </dependency>
 
         <!-- restful开发规范依赖 -->
@@ -90,11 +101,13 @@
             <version>2.0</version>
         </dependency>
 
+        <!-- redis -->
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.58</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>2.2.2.RELEASE</version>
         </dependency>
+
     </dependencies>
 
     <dependencyManagement>
@@ -117,5 +130,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

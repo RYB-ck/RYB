@@ -1,7 +1,9 @@
 package com.ryb.core.exception;
 
+import com.ryb.core.resultenum.ResultEnum;
+
 public class ExceptionHandler extends Exception {
-    public ExceptionHandler(String message) {
-        super(message);
+    public ExceptionHandler(ResultEnum resultEnum) {
+        super(resultEnum.getMsg());
     }
 }
