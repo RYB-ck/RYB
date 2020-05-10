@@ -1,13 +1,12 @@
 package com.ryb.oauth.service.impl;
 
-import com.ryb.core.exception.ResultException;
-import com.ryb.core.log.Log;
 import com.ryb.core.po.User;
 import com.ryb.core.result.APIResult;
 import com.ryb.core.resultenum.ResultEnum;
 import com.ryb.oauth.mapper.UserMapper;
 import com.ryb.oauth.service.UserAuthService;
 import com.ryb.oauth.util.PassSaltAddition;
+import com.ryb.redis.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,11 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserAuthServiceImpl implements UserAuthService {
     final UserMapper userMapper;
     final PassSaltAddition passSaltAddition;
+    final RedisUtils redisUtils;
 
     @Autowired
-    public UserAuthServiceImpl(UserMapper userMapper, PassSaltAddition passSaltAddition) {
+    public UserAuthServiceImpl(UserMapper userMapper, PassSaltAddition passSaltAddition, RedisUtils redisUtils) {
         this.userMapper = userMapper;
         this.passSaltAddition = passSaltAddition;
+        this.redisUtils = redisUtils;
     }
 
     @Override
@@ -33,6 +34,7 @@ public class UserAuthServiceImpl implements UserAuthService {
         if (userMapper.authUser(user) != null) {
             return APIResult.newSuccessResult("成功");
         }
+        redisUtils.set("123", "123");
         return APIResult.newSuccessResult("成功");
     }
 

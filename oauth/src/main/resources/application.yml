@@ -57,6 +57,16 @@ spring:
         reset-enable: true
         #启用
         enabled: true
+  redis:
+    host: 39.106.24.142
+    port: 6379
+    password: xiaoqiao
+    jedis:
+      pool:
+        max-active: 100
+        max-idle: 10
+        max-wait: 100000
+    timeout: 100000
 
 # 服务注册中心
 eureka:
