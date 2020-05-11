@@ -2,7 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ryb.oauth.mapper.UserMapper">
     <select id="authUser" resultType="com.ryb.core.po.User">
-        SELECT COUNT(1)
+        SELECT id,
+               user_name,
+               user_nickname,
+               user_head_portrait,
+               user_sex,
+               user_autograph,
+               user_openid,
+               user_mobile,
+               user_mail,
+               user_pass,
+               last_login_time,
+               create_time,
+               create_user,
+               update_time,
+               update_user,
+               status
         FROM user
         WHERE (user_mobile = #{userMobile} OR user_mail = #{userMail})
           AND user_pass = #{userPass}
@@ -10,10 +25,11 @@
     </select>
 
     <insert id="register">
-        INSERT INTO user (id, user_name, user_nickname, user_head_portrait, user_sex, user_autograph, user_openid,
-                          user_mobile, user_mail, user_pass, last_login_time, create_time, create_user, update_time,
-                          update_user)
+        INSERT INTO user (ryb.user.id, ryb.user.user_name, ryb.user.user_nickname, ryb.user.user_head_portrait,
+                          ryb.user.user_sex, ryb.user.user_autograph, ryb.user.user_openid, ryb.user.user_mobile,
+                          ryb.user.user_mail, ryb.user.user_pass, ryb.user.last_login_time, ryb.user.create_time,
+                          ryb.user.create_user, ryb.user.update_time, ryb.user.update_user, ryb.user.status)
         VALUES ( #{id}, #{userName}, #{userNickName}, #{userHeadPortrait}, #{userSex}, #{userAutograph}, #{userOpenid}
-               , #{userMobile}, #{userMail}, #{userPass}, NOW(), NOW(), #{id}, NOW(), #{id})
+               , #{userMobile}, #{userMail}, #{userPass}, NOW(), NOW(), #{id}, NOW(), #{id}, 1)
     </insert>
 </mapper>

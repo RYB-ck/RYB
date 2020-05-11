@@ -8,7 +8,7 @@ import java.util.Date;
 public class User {
     private Long id;
     private String userName;
-    private String userNickname;
+    private String userNickName;
     private String userHeadPortrait;
     private Integer userSex;
     private String userAutograph;

@@ -4,17 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author 常坤
  */
 @Component
 public class RedisUtils {
-    final RedisTemplate<Object, Object> redisTemplate;
+    final RedisTemplate<String, String> redisTemplate;
 
     @Autowired
-    public RedisUtils(RedisTemplate<Object, Object> redisTemplate) {
+    public RedisUtils(RedisTemplate<String, String> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
@@ -22,10 +24,10 @@ public class RedisUtils {
         return redisTemplate.opsForValue().get(key);
     }
 
-    public boolean set(final String key, Object value) {
+    public boolean set(final String key, String value, int time) {
         boolean result = false;
         try {
-            redisTemplate.opsForValue().set(key, value);
+            redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
             result = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -33,7 +35,7 @@ public class RedisUtils {
         return result;
     }
 
-    public boolean getAndSet(final String key, Object value) {
+    public boolean getAndSet(final String key, String value) {
         boolean result = false;
         try {
             redisTemplate.opsForValue().getAndSet(key, value);
@@ -55,7 +57,7 @@ public class RedisUtils {
         return result;
     }
 
-    public boolean delete(Collection<Object> keys) {
+    public boolean delete(Collection<String> keys) {
         try {
             Long result = redisTemplate.delete(keys);
             if (result != null && keys.size() == result.intValue()) {

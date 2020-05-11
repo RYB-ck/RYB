@@ -4,6 +4,7 @@ import com.ryb.redis.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -24,8 +25,8 @@ public class InitializationToken {
         Map<String, String> result = new HashMap<>(4);
         String accessToken = UUID.randomUUID().toString();
         String refreshToken = UUID.randomUUID().toString();
-        redisUtils.set(accessToken, userId);
-        redisUtils.set(refreshToken, userId);
+        redisUtils.set(accessToken, String.valueOf(userId), 3600);
+        redisUtils.set(refreshToken, String.valueOf(userId), 86400);
         result.put("accessToken", accessToken);
         result.put("refreshToken", refreshToken);
         return result;
