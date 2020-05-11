@@ -47,6 +47,7 @@ public class APIResult<T> extends ResultSupport {
     public static <U> APIResult<U> newSuccessResult(U data){
         APIResult<U> apiResult = new APIResult<U>();
         apiResult.setData(data);
+        apiResult.setCode(200);
         return apiResult;
     }
 
