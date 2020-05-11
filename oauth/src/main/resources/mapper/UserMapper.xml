@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ryb.oauth.mapper.UserMapper">
-    <select id="authUser" resultType="com.ryb.core.po.User">
+    <resultMap id="result" type="com.ryb.core.po.User">
+        <result property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userNickName" column="user_nickname"/>
+        <result property="userHeadPortrait" column="user_head_portrait"/>
+        <result property="userSex" column="user_sex"/>
+        <result property="userAutograph" column="user_autograph"/>
+        <result property="userOpenid" column="user_openid"/>
+        <result property="userMobile" column="user_mobile"/>
+        <result property="userMail" column="user_mail"/>
+        <result property="userPass" column="user_pass"/>
+        <result property="lastLoginTime" column="last_login_time"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUser" column="create_user"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateUser" column="update_user"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <select id="authUser" resultMap="result">
         SELECT id,
                user_name,
                user_nickname,
@@ -20,7 +40,6 @@
                status
         FROM user
         WHERE (user_mobile = #{userMobile} OR user_mail = #{userMail})
-          AND user_pass = #{userPass}
           AND status = 1
     </select>
 

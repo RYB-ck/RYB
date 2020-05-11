@@ -14,4 +14,9 @@ public class PassSaltAddition {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder.encode(pass);
     }
+
+    public Boolean authPass(String pass, String hashedPassword) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.matches(pass, hashedPassword);
+    }
 }

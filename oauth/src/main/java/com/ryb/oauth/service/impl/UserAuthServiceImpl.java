@@ -33,24 +33,34 @@ public class UserAuthServiceImpl implements UserAuthService {
 
     @Override
     public APIResult<?> authUser(User user) {
-        user.setUserPass(passSaltAddition.passSaltAddition(user.getUserPass()));
-        User authUser = userMapper.authUser(user);
-        if (authUser != null) {
-            return APIResult.newSuccessResult(initializationToken.getToken(authUser.getId()));
+        try {
+            User authUser = userMapper.authUser(user);
+            if (authUser != null) {
+                if (passSaltAddition.authPass(user.getUserPass(), authUser.getUserPass())) {
+                    return APIResult.newSuccessResult(initializationToken.getToken(authUser.getId()));
+                }
+                return APIResult.newFailResult(ResultEnum.USER_AUTH_FAIL);
+            }
+            return APIResult.newFailResult(ResultEnum.IS_NOT_REGISTER);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return APIResult.newFailResult(ResultEnum.ERROR);
         }
-        return APIResult.newFailResult(ResultEnum.ERROR);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public APIResult<?> register(User user) {
         try {
+            if (userMapper.isRegister(user) > 0) {
+                return APIResult.newFailResult(ResultEnum.IS_REGISTER);
+            }
             user.setId(SnowflakeIdWorker.nextId());
             user.setUserPass(passSaltAddition.passSaltAddition(user.getUserPass()));
             if (userMapper.register(user) != null) {
                 return APIResult.newSuccessResult(initializationToken.getToken(user.getId()));
             }
-            return APIResult.newFailResult(ResultEnum.ERROR);
+            return APIResult.newFailResult(ResultEnum.SAVE_FAIL);
         } catch (Exception e) {
             e.printStackTrace();
             return APIResult.newFailResult(ResultEnum.ERROR);

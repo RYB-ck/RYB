@@ -21,4 +21,5 @@ public class User {
     private Long createUser;
     private Date updateTime;
     private Long updateUser;
+    private Integer status;
 }
